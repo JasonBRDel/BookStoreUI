@@ -1,0 +1,12 @@
+<nav class="navbar navbar-dark bg-dark">
+  <div>
+    <a class="navbar-brand" routerLink="books">Books</a>
+
+    <a class="navbar-brand" routerLink="orders">Orders</a>
+  </div>
+  @if(authService.authenticated()){
+  <button type="button" class="btn btn-danger" (click)="logout()">Logout</button>
+  }
+  
+
+</nav>
