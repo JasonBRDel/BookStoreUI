@@ -5,7 +5,6 @@ import { pipe, take } from 'rxjs';
 import { LoadingComponent } from '../../shared/loading-component/loading-component';
 import { BookListTableComponent } from './book-list-table/book-list-table';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../core/services/auth-service';
 
 @Component({
   selector: 'app-book-list-component',
@@ -19,7 +18,6 @@ export class BookListComponent implements OnInit {
   loading = true;
   errorMessage = '';
 
-  authService = inject(AuthService);
   bookService = inject(BookStoreService);
 
   constructor(private cdr: ChangeDetectorRef){}
@@ -31,7 +29,6 @@ export class BookListComponent implements OnInit {
 
   getData() {
     this.loading = true;
-    this.errorMessage = '';
     this.bookService.getAllBooks()
     .pipe(take(1))
     .subscribe({

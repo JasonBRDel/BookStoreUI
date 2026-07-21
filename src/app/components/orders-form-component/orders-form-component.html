@@ -1,1 +1,6 @@
-<p>orders-form-component works!</p>
+@if(loading){
+<loading-component></loading-component>
+
+} @else {
+<orders-list-component [data]="orders"></orders-list-component>
+}

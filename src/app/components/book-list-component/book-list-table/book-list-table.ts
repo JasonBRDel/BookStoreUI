@@ -19,7 +19,7 @@ export class BookListTableComponent {
   createOrder(book: Book) {
 
     const request: CreateOrderRequest = {
-      bookId: book.id, inventory: book.inventory
+      bookId: book.id, quantity: 1
     }
 
     this.orderService.createOrder(request).pipe(take(1))
