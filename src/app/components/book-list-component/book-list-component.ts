@@ -23,7 +23,6 @@ export class BookListComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef){}
 
   ngOnInit(): void {
-
     this.getData();
   }
 

@@ -37,6 +37,10 @@ export class OrderService {
     return this.http.delete<boolean>(`${this.url}/${orderId}`)
   }
 
+  completeOrder(orderId: number): Observable<boolean> {
+    return this.http.put<boolean>(`${this.url}/${orderId}`, null)
+  }
+
   setData(data: Order[]) {
     this.dataSource.next(data);
   }
