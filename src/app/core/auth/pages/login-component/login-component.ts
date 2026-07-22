@@ -5,6 +5,7 @@ import { AuthService } from '../../../services/auth-service';
 import { payload } from '../../interfaces/payload';
 import { take } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login-component',
@@ -19,6 +20,8 @@ export class LoginComponent {
 
   authService = inject(AuthService);
   router = inject(Router);
+  toastr = inject(ToastrService);
+
 
   loginForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
@@ -42,11 +45,17 @@ export class LoginComponent {
           }
         },
         error: (error) => {
-          console.error('Error:', error);
+          this.showError(error);
         },
-        complete: () => this.loading = false
+        complete: () => {
+          this.loading = false;
+        }
       }
       )
+  }
+
+  showError(msg: any) {
+    this.toastr.error(`${msg.message}`, msg.error);
   }
 
 

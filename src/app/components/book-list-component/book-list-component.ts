@@ -20,7 +20,7 @@ export class BookListComponent implements OnInit {
 
   bookService = inject(BookStoreService);
 
-  constructor(private cdr: ChangeDetectorRef){}
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.getData();
@@ -29,19 +29,19 @@ export class BookListComponent implements OnInit {
   getData() {
     this.loading = true;
     this.bookService.getAllBooks()
-    .pipe(take(1))
-    .subscribe({
-      next: (data) => {        
-        this.books = data;           
-      },
-      error: (err) => {
-        this.errorMessage = err.message;
-      },
-      complete: () =>  {
-        this.loading = false
-        this.cdr.detectChanges() 
-      }
-    });
+      .pipe(take(1))
+      .subscribe({
+        next: (data) => {
+          this.books = data;
+        },
+        error: (err) => {
+          this.errorMessage = err.message;
+        },
+        complete: () => {
+          this.loading = false
+          this.cdr.detectChanges()
+        }
+      });
   }
 
 }

@@ -3,6 +3,7 @@ import { Order } from '../../../entities/order';
 import { CommonModule } from '@angular/common';
 import { OrderService } from '../../../core/services/orders-service';
 import { switchMap, take, timer } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'orders-list-component',
@@ -15,10 +16,12 @@ export class OrdersListComponent {
 
   loading = false;
 
+  orderService = inject(OrderService);
+  toastr = inject(ToastrService);
+
   constructor(private cdr: ChangeDetectorRef) { }
 
 
-  orderService = inject(OrderService);
 
   deleteOrder(orderId: number) {
     this.loading = true;
@@ -29,8 +32,10 @@ export class OrdersListComponent {
       .subscribe({
         next: () => {
           this.loading = false;
-          this.cdr.detectChanges()
-        }
+          this.cdr.detectChanges();
+          this.showSuccess('deleted');
+        },
+        error: () => this.showError('delete')
       })
   }
 
@@ -44,9 +49,20 @@ export class OrdersListComponent {
       .subscribe({
         next: () => {
           this.loading = false;
-          this.cdr.detectChanges()
-        }
+          this.cdr.detectChanges();
+          this.showSuccess('completed');
+        },
+        error: () => this.showError('complete')
       })
+  }
+
+
+  showSuccess(action: string) {
+    this.toastr.success(`Order ${action} successfully!`, 'Success');
+  }
+
+  showError(action: string) {
+    this.toastr.error(`Order ${action} failed!`, 'Error');
   }
 
 

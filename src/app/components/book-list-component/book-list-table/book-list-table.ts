@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { OrderService } from '../../../core/services/orders-service';
 import { take } from 'rxjs';
 import { CreateOrderRequest } from '../../../entities/order';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'book-list-table',
@@ -14,6 +15,7 @@ import { CreateOrderRequest } from '../../../entities/order';
 export class BookListTableComponent {
   @Input() data: Book[] = [];
   orderService = inject(OrderService);
+  toastr = inject(ToastrService);
   loading = false;
 
   constructor(private cdr: ChangeDetectorRef) { }
@@ -29,8 +31,18 @@ export class BookListTableComponent {
         next: () => {
           this.loading = false;
           this.cdr.detectChanges()
-        }
+          this.showSuccess('created');
+        },
+        error: () => this.showError('create')
       })
+  }
+
+  showSuccess(action: string) {
+    this.toastr.success(`Order ${action} successfully!`, 'Success');
+  }
+
+  showError(action: string) {
+    this.toastr.error(`Order ${action} failed!`, 'Error');
   }
 
 }

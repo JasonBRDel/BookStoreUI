@@ -41,7 +41,6 @@ export class OrdersFormComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.orders = data;
-          console.log(this.orders);
           this.loading = false
           this.cdr.detectChanges()
         },
